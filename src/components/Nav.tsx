@@ -4,7 +4,7 @@ const Nav = ({ handleSubmit }: any) => {
   const [storeInput, setStoreInput] = useState('');
 
   return (
-    <div className="navbar flex items-center justify-center">
+    <div className="navbar flex items-center justify-center pt-5">
       <h1 className="text-4xl">Weather App</h1>
       <form onSubmit={handleSubmit}>
         <input

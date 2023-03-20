@@ -10,15 +10,16 @@ function App() {
   const [currentLocationData, setCurrentLocationData] = useState(null);
   const [currentLocationWeekWeather, setCurrentLocationWeekWeather] = useState(null);
   const [error, setError] = useState('');
+  const [resError, setResError] = useState<string | null>(null);
+  const [geolocationError, setGeolocationError] = useState<string | null>(null);
   const [userCoords, setUserCoords] = useState<{ lat: null | number; lon: null | number }>({ lat: null, lon: null });
 
   const units = 'metric';
   const key = '6cb2850d4a00966ba4cb83beed931ccc';
-
   const getUserCoordinates = () => {
     const geolocationAPI = navigator.geolocation;
     if (!geolocationAPI) {
-      setError('Geolocation API is not available in your browser!');
+      setGeolocationError('Geolocation API is not available in your browser!');
     } else {
       geolocationAPI.getCurrentPosition(
         (position) => {
@@ -27,7 +28,7 @@ function App() {
           setUserCoords({ lat: coords.latitude, lon: coords.longitude });
         },
         (error) => {
-          setError('Something went wrong getting your position!');
+          setGeolocationError('Something went wrong getting your position!');
         }
       );
     }
@@ -47,54 +48,29 @@ function App() {
     const fetchWeatherData = async () => {
       const units = 'metric';
       const responseGeo = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${key}`);
+
       const dataGeo = await responseGeo.json();
+
       if (!responseGeo.ok) {
-        setError("Sorry, but you didn't get any data, try again!");
+        setResError('There was a difficulty with request, please try again');
         setWeatherData(null);
       } else if (responseGeo.ok) {
-        const { name, lat, lon } = dataGeo[0];
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${name}&units=${units}&lat=${lat}&lon=${lon}&appid=${key}`
-        );
-        const data = await response.json();
-        setError('');
-        setWeatherData(data);
+        if (dataGeo.length > 0) {
+          const { name, lat, lon } = dataGeo[0];
+          const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?&units=${units}&lat=${lat}&lon=${lon}&appid=${key}`
+          );
+          const data = await response.json();
+          setError('');
+          setWeatherData(data);
+        } else if (dataGeo.length === 0) {
+          setError('Invalid city name provided, try again!');
+          setWeatherData(null);
+        }
       }
-      // const data = await response.json();
-      // setWeatherData(data);
     };
     fetchWeatherData();
   };
-
-  // useEffect(() => {
-  //   const fetchWeatherData = async () => {
-  //     const key = '6cb2850d4a00966ba4cb83beed931ccc';
-  //     const lang = 'en';
-  //     const units = 'metric';
-  //     // const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=${units}&appid=${key}`;
-  //     // const response = await fetch(url);
-  //     // const url2 = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${1}&appid=${key}`;
-  //     const responseGeo = await fetch(
-  //       `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=${1}&appid=${key}`
-  //     );
-  //     const dataGeo = await responseGeo.json();
-  //     if (!responseGeo.ok) {
-  //       setError("Sorry, but you didn't get any data, try again!");
-  //       setWeatherData(null);
-  //     } else if (responseGeo.ok) {
-  //       setError('');
-  //       // console.log(dataGeo)
-  //       const response = await fetch(
-  //         `https://api.openweathermap.org/data/2.5/weather?q=${dataGeo[0].name}&units=${units}&lat=${dataGeo[0].lat}&lon=${dataGeo[0].lon}&appid=${key}`
-  //       );
-  //       const data = await response.json();
-  //       setWeatherData(data);
-  //     }
-  //     // const data = await response.json();
-  //     // setWeatherData(data);
-  //   };
-  //   fetchWeatherData();
-  // }, [cityName]);
 
   useEffect(() => {
     getUserCoordinates();
@@ -104,7 +80,11 @@ function App() {
     <div className="container mx-auto my-auto content-center">
       <Navbar handleSubmit={handleSubmit} />
       {currentLocationData !== null && <Sidebar currentLocationData={currentLocationData} />}
-      {weatherData ? <Main weatherData={weatherData} error={error} /> : null}
+      {weatherData ? (
+        <Main weatherData={weatherData} />
+      ) : (
+        <h1 className="text-center mx-auto text-4xl relative">{error}</h1>
+      )}
     </div>
   );
 }

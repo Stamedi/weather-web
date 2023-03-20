@@ -10,6 +10,7 @@ module.exports = {
       pink: '#FFBB98',
       grey: '#7d8E95',
       'dark-gray': '#344648',
+      red: 'red'
     },
     extend: {
       textShadow: {
