@@ -9,12 +9,12 @@ module.exports = {
       beige: '#FBE0C3',
       pink: '#FFBB98',
       grey: '#7d8E95',
-      'dark-gray': '#344648',
-      red: 'red'
+      'dark-grey': '#344648',
+      red: 'red',
     },
     extend: {
       textShadow: {
-        DEFAULT: '#fff 1px 0 8px;',
+        DEFAULT: '#344648 1px 0 8px;',
       },
     },
   },

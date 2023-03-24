@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/Nav';
 import Main from './components/Main';
 import Sidebar from './components/Sidebar';
-import raining from './assets/images/raining.gif';
+import snow from './assets/images/snow.mp4';
+import rain from './assets/images/rain.mp4';
+import fog from './assets/images/fog.mp4';
+import clouds from './assets/images/clouds.mp4';
+import thunder from './assets/images/thunder.mp4';
+import clear from './assets/images/clear.mp4';
 import './App.css';
 
 function App() {
@@ -77,7 +82,13 @@ function App() {
   }, []);
 
   return (
-    <div className="container mx-auto my-auto content-center">
+    <div className={weatherData ? ' h-full text-dark-grey' : 'container mx-auto h-screen text-dark-grey'}>
+      <div
+        className=" absolute inset-x-0  z-1 h-xl
+  w-xl"
+      >
+        <video className="h-screen w-full rounded-lg object-cover" loop muted autoPlay src={fog}></video>
+      </div>
       <Navbar handleSubmit={handleSubmit} />
       {currentLocationData !== null && <Sidebar currentLocationData={currentLocationData} />}
       {weatherData ? (
