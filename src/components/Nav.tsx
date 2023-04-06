@@ -4,19 +4,17 @@ const Nav = ({ handleSubmit }: any) => {
   const [storeInput, setStoreInput] = useState('');
 
   return (
-    <div className=" pl-10 flex items-center justify-start pt-5">
+    <div className="container mx-auto pl-10 flex-column sm:flex items-center  pt-5 relative">
       <h1 className="text-4xl">Weather App</h1>
-      <div className="flex justify-center">
-        <form className="relative xl:w-96 ml-10 mr-4 mt-2" onSubmit={handleSubmit}>
-          <input
-            value={storeInput}
-            onChange={(e) => setStoreInput(e.target.value)}
-            type="text"
-            placeholder="Search a City..."
-            className="px-3 py-2 appearance-none bg-transparent border-none w-full text-gray-700 mr-3 leading-tight focus:outline-none rounded-lg"
-          />
-        </form>
-      </div>
+      <form className="relative sm:w-96 sm:ml-10 mr-4 mt-10 sm:mt-2  flex sm:justify-center" onSubmit={handleSubmit}>
+        <input
+          value={storeInput}
+          onChange={(e) => setStoreInput(e.target.value)}
+          type="text"
+          placeholder="Search a City..."
+          className="px-3 py-2 appearance-none bg-transparent border-none w-full text-gray-700 mr-3 leading-tight focus:outline-none rounded-lg"
+        />
+      </form>
     </div>
   );
 };
