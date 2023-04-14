@@ -5,7 +5,7 @@ const Nav = ({ handleSubmit }: any) => {
 
   return (
     <div className="container mx-auto pl-10 flex-column sm:flex items-center  pt-5 relative">
-      <h1 className="text-4xl">Weather App</h1>
+      <h1 className="text-4xl text-white text-shadow">Weather App</h1>
       <form className="relative sm:w-96 sm:ml-10 mr-4 mt-10 sm:mt-2  flex sm:justify-center" onSubmit={handleSubmit}>
         <input
           value={storeInput}

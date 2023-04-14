@@ -3,12 +3,6 @@ import Navbar from './components/Nav';
 import Main from './components/Main';
 import Sidebar from './components/Sidebar';
 import Background from './components/Background';
-import snow from './assets/images/snow.mp4';
-import rain from './assets/images/rain.mp4';
-import fog from './assets/images/fog.mp4';
-import clouds from './assets/images/clouds.mp4';
-import thunder from './assets/images/thunder.mp4';
-import clear from './assets/images/clear.mp4';
 import './App.css';
 
 interface WeatherData {
@@ -29,7 +23,6 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [resError, setResError] = useState<string | null>(null);
   const [geolocationError, setGeolocationError] = useState<string | null>(null);
-  // const [userCoords, setUserCoords] = useState<{ lat: null | number; lon: null | number }>({ lat: null, lon: null });
 
   const units = 'metric';
   const key = '6cb2850d4a00966ba4cb83beed931ccc';
@@ -79,7 +72,6 @@ function App() {
           const data = await response.json();
 
           setError(null);
-          console.log(data);
           setWeatherData(data);
           setWeatherData({
             dt: data.dt,
