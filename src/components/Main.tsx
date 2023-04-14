@@ -6,7 +6,7 @@ import fog from './assets/images/fog.mp4';
 import clouds from './assets/images/clouds.mp4';
 import thunder from './assets/images/thunder.mp4';
 import clear from './assets/images/clear.mp4';
-import countries, { getName } from 'country-list';
+import { getName } from 'country-list';
 import moment from 'moment';
 
 const Main = ({ weatherData = {} }: any) => {
@@ -44,7 +44,7 @@ const Main = ({ weatherData = {} }: any) => {
           }
         ></video>
       </div> */}
-      <section className="md:flex text-white text-shadow items-start ">
+      <section className=" flex-column md:flex text-white text-shadow items-start ">
         <div className="max-w-md bg-white bg-opacity-40 p-5 rounded-xl shadow-lg">
           <h2 className="md:text-5xl md:pt-7 text-3xl text-left max-w-md ">
             {name}, {getName(country)}

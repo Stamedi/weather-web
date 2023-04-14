@@ -106,24 +106,17 @@ function App() {
   }, []);
 
   return (
-    <div className={weatherData ? ' h-full text-dark-grey' : 'container mx-auto h-screen text-dark-grey'}>
-      <div
-        className=" absolute inset-x-0 
-  w-xl"
-      >
+    <div className="bg-gradient-to-b from-grey to-beige bg-no-repeat text-dark-grey min-h-screen">
+      {weatherData && <Background weatherData={weatherData} />}
+      <div className=" container mx-auto">
+        <Navbar handleSubmit={handleSubmit} />
+        {currentLocationData ? <Sidebar currentLocationData={currentLocationData} /> : <h1>{geolocationError}</h1>}
         {weatherData ? (
-          <Background weatherData={weatherData} />
+          <Main weatherData={weatherData} />
         ) : (
-          <div className="w-screen object-fill min-h-screen bg-gradient-to-b from-grey to-beige "></div>
+          <h1 className="text-center mx-auto text-4xl relative">{error}</h1>
         )}
       </div>
-      <Navbar handleSubmit={handleSubmit} />
-      {currentLocationData ? <Sidebar currentLocationData={currentLocationData} /> : <h1>{geolocationError}</h1>}
-      {weatherData ? (
-        <Main weatherData={weatherData} />
-      ) : (
-        <h1 className="text-center mx-auto text-4xl relative">{error}</h1>
-      )}
     </div>
   );
 }
