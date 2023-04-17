@@ -3,7 +3,6 @@ import Navbar from './components/Nav';
 import Main from './components/Main';
 import Sidebar from './components/Sidebar';
 import Background from './components/Background';
-import './App.css';
 
 interface WeatherData {
   dt: number;
@@ -21,11 +20,9 @@ function App() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [currentLocationData, setCurrentLocationData] = useState(null);
   const [error, setError] = useState<string | null>(null);
-  const [resError, setResError] = useState<string | null>(null);
   const [geolocationError, setGeolocationError] = useState<string | null>(null);
-
   const units = 'metric';
-  const key = '6cb2850d4a00966ba4cb83beed931ccc';
+  const key = import.meta.env.VITE_REACT_APP_WEATHER_API_KEY;
   const getUserCoordinates = () => {
     const geolocationAPI = navigator.geolocation;
     if (!geolocationAPI) {
@@ -61,7 +58,7 @@ function App() {
       const dataGeo = await responseGeo.json();
 
       if (!responseGeo.ok) {
-        setResError('There was a difficulty with request, please try again');
+        setError('There was a difficulty with request, please try again');
         setWeatherData(null);
       } else if (responseGeo.ok) {
         if (dataGeo.length > 0) {

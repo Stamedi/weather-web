@@ -1,5 +1,4 @@
 import React from 'react';
-import '../App.css';
 import { getName } from 'country-list';
 import moment from 'moment';
 
