@@ -1,8 +1,8 @@
 import React from 'react';
 import { getName } from 'country-list';
 import moment from 'moment';
-
-const Main = ({ weatherData = {} }: any) => {
+import { WeatherData } from '../types';
+const Main = ({ weatherData }: { weatherData: WeatherData }) => {
   const { dt, temp, feels_like, name, country, timezone, icon, weather_type, wind } = weatherData;
   const date = new Date(dt * 1000 + timezone * 1000);
   const formattedDate = moment(date).format('LL');

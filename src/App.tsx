@@ -3,26 +3,16 @@ import Navbar from './components/Nav';
 import Main from './components/Main';
 import Sidebar from './components/Sidebar';
 import Background from './components/Background';
-
-interface WeatherData {
-  dt: number;
-  temp: number;
-  feels_like: number;
-  name: string;
-  country: string;
-  timezone: number;
-  icon: string;
-  weather_type: string;
-  wind: number;
-}
+import { WeatherData, CurrentLocationWeatherData } from './types';
 
 function App() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-  const [currentLocationData, setCurrentLocationData] = useState(null);
+  const [currentLocationData, setCurrentLocationData] = useState<CurrentLocationWeatherData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [geolocationError, setGeolocationError] = useState<string | null>(null);
   const units = 'metric';
   const key = import.meta.env.VITE_REACT_APP_WEATHER_API_KEY;
+
   const getUserCoordinates = () => {
     const geolocationAPI = navigator.geolocation;
     if (!geolocationAPI) {
@@ -33,7 +23,7 @@ function App() {
           const { coords } = position;
           fetchCurrentLocationWeather(coords.latitude, coords.longitude);
         },
-        (error) => {
+        () => {
           setGeolocationError('Something went wrong getting your position!');
         }
       );
@@ -45,12 +35,20 @@ function App() {
       `https://api.openweathermap.org/data/2.5/weather?&units=${units}&lat=${lat}&lon=${lon}&appid=${key}`
     );
     const data = await response.json();
-    setCurrentLocationData(data);
+    setCurrentLocationData({
+      temp: data.main.temp,
+      feels_like: data.main.feels_like,
+      name: data.name,
+      country: data.sys.country,
+      icon: data.weather[0].icon,
+      wind: data.wind.speed,
+    });
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const cityName = event.target[0].value;
+    const cityNameElement = document.querySelector<HTMLInputElement>('#city-input');
+    const cityName = cityNameElement?.value || '';
     const fetchWeatherData = async () => {
       const units = 'metric';
       const responseGeo = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${key}`);

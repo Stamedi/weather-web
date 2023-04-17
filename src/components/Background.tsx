@@ -5,8 +5,8 @@ import fog from '../assets/images/fog.mp4';
 import clouds from '../assets/images/clouds.mp4';
 import thunder from '../assets/images/thunder.mp4';
 import clear from '../assets/images/clear.mp4';
-
-const Background = ({ weatherData }: any) => {
+import { WeatherData } from '../types';
+const Background = ({ weatherData }: { weatherData: WeatherData }) => {
   const { weather_type } = weatherData;
   return (
     <video

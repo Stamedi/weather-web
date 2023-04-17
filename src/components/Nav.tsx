@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Nav = ({ handleSubmit }: any) => {
+const Nav = ({ handleSubmit }: { handleSubmit: React.FormEventHandler<HTMLFormElement> }) => {
   const [storeInput, setStoreInput] = useState('');
 
   return (
@@ -10,6 +10,7 @@ const Nav = ({ handleSubmit }: any) => {
         <input
           value={storeInput}
           onChange={(e) => setStoreInput(e.target.value)}
+          id="city-input"
           type="text"
           placeholder="Search a City..."
           className="px-3 py-2 appearance-none bg-transparent border-none w-full text-gray-700 mr-3 leading-tight focus:outline-none rounded-lg"
