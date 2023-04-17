@@ -12,7 +12,7 @@ function App() {
   const [geolocationError, setGeolocationError] = useState<string | null>(null);
   const units = 'metric';
   const key = import.meta.env.VITE_REACT_APP_WEATHER_API_KEY;
-
+  console.log(weatherData);
   const getUserCoordinates = () => {
     const geolocationAPI = navigator.geolocation;
     if (!geolocationAPI) {
@@ -51,7 +51,7 @@ function App() {
     const cityName = cityNameElement?.value || '';
     const fetchWeatherData = async () => {
       const units = 'metric';
-      const responseGeo = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${key}`);
+      const responseGeo = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${key}`);
 
       const dataGeo = await responseGeo.json();
 
