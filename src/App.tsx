@@ -12,7 +12,6 @@ function App() {
   const [geolocationError, setGeolocationError] = useState<string | null>(null);
   const units = 'metric';
   const key = import.meta.env.VITE_REACT_APP_WEATHER_API_KEY;
-  console.log(weatherData);
   const getUserCoordinates = () => {
     const geolocationAPI = navigator.geolocation;
     if (!geolocationAPI) {
